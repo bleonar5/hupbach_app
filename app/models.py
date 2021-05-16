@@ -4,10 +4,10 @@ class User(db.Model):
 	__tablename__ = 'users'
 
 	id = db.Column(db.Integer, primary_key=True)
-	pid = db.Column(db.String(64),index=True,unique=True)
-	object_type = db.Column(db.String(64))
-	version = db.Column(db.String(64))
-	reactivation = db.Column(db.String(64))
+	pid = db.Column(db.String(64),index=True,unique=True, nullable=True)
+	object_type = db.Column(db.String(64), nullable=True)
+	version = db.Column(db.String(64), nullable=True)
+	reactivation = db.Column(db.String(64), nullable=True)
 
 	def __init__(self,pid,object_type,version,reactivation):
 		self.pid = pid
