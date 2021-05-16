@@ -42,12 +42,10 @@ def sl():
 
 @app.route('/redirect/s2')
 def s2():
-    u = User.query.filter(User.pid == str(request.args.get('pid'))).first()
+    u = User.query.filter(User.pid == str(request.args.get('PROLIFIC_PID'))).first()
+    url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_8kSbch15uEldXOm'
     if u:
-        u.reactivation = request.args.get('reactivation')
-        db.session.commit()
-        print("user updated", u)
-        return(redirect('https://app.prolific.co/submissions/complete?cc={}'.format(request.args.get('completion_code'))))
+        return(redirect('{}?PROLIFIC_PID={}object_type={}&version={}'.format(url,u.pid,u.object_type,u.version)))
     else:
         return 'We do not have a record for your prolific ID. Please contact experiment administrator'
 
@@ -74,27 +72,6 @@ def s3():
     if u:
         return(redirect('{}?PROLIFIC_PID={}&object_type={}&version={}&reactivation={}'.format(url,u.pid,u.object_type,u.version,u.reactivation)))
     else:
-        return 'We do not have a record for your prolific ID. Please contact experiment administrator'
-
-@app.route('/redirect/day1')
-def red():
-    u = User.query.filter(User.pid == str(request.args.get('pid'))).first()
-    if u:
-        return(redirect('https://run.pavlovia.org/bleonard/Rem_Tag_1/?participant='+str(u.pid)+'&group='+str(u.group)+'&session=1'))
-    else:
-        u = User(pid = request.args.get('pid'), group = int(request.args.get('group')), key_order = 0)
-        print("user created", u)
-        db.session.add(u)
-        db.session.commit()
-        #u = User.query.filter(User.pid == str(request.args.get('pid'))).first()
-        return(redirect('https://run.pavlovia.org/bleonard/Rem_Tag_1/?participant='+str(u.pid)+'&group='+str(u.group)+'&session=1'))
-
-@app.route('/redirect/day2')
-def red2():
-    u = User.query.filter(User.pid == str(request.args.get('pid'))).first()
-    if u:
-        return(redirect('https://run.pavlovia.org/bleonard/rem_tag_2/?completion_code='+str(request.args.get('completion_code'))+'&participant='+str(u.pid)+'&group='+str(u.group)+'&session=2'))
-    else:#u = User.query.filter(User.pid == str(request.args.get('pid'))).first()
         return 'We do not have a record for your prolific ID. Please contact experiment administrator'
 
 
