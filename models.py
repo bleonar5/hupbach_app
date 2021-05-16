@@ -9,7 +9,7 @@ class User(db.Model):
 	version = db.Column(db.String(64), nullable=True)
 	reactivation = db.Column(db.String(64), nullable=True)
 
-	def __init__(self,pid,object_type,version,reactivation):
+	def __init__(self,pid,object_type,version,reactivation=None):
 		self.pid = pid
 		self.object_type = object_type
 		self.version = version
