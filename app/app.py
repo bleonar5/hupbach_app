@@ -45,7 +45,7 @@ def s2():
     u = User.query.filter(User.pid == str(request.args.get('PROLIFIC_PID'))).first()
     url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_8kSbch15uEldXOm'
     if u:
-        return(redirect('{}?PROLIFIC_PID={}object_type={}&version={}'.format(url,u.pid,u.object_type,u.version)))
+        return(redirect('{}?PROLIFIC_PID={}&object_type={}&version={}'.format(url,u.pid,u.object_type,u.version)))
     else:
         return 'We do not have a record for your prolific ID. Please contact experiment administrator'
 
@@ -63,13 +63,13 @@ def s2_end():
 @app.route('/redirect/s3')
 def s3():
     u = User.query.filter(User.pid == str(request.args.get('pid'))).first()
-    if u.object_type == 'Beach':
-        url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_9WAElYt5wP956e2'
-    elif u.object_type == 'Neutral':
-        url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_7QimFdKbTh0fMDI'
-    else:
-        url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_0961peJgVtIvuh8'
     if u:
+        if u.object_type == 'Beach':
+            url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_9WAElYt5wP956e2'
+        elif u.object_type == 'Neutral':
+            url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_7QimFdKbTh0fMDI'
+        else:
+            url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_0961peJgVtIvuh8'
         return(redirect('{}?PROLIFIC_PID={}&object_type={}&version={}&reactivation={}'.format(url,u.pid,u.object_type,u.version,u.reactivation)))
     else:
         return 'We do not have a record for your prolific ID. Please contact experiment administrator'
