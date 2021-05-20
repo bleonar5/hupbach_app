@@ -43,7 +43,7 @@ def sl():
 @app.route('/redirect/s2')
 def s2():
     u = User.query.filter(User.pid == str(request.args.get('PROLIFIC_PID'))).first()
-    url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_8kSbch15uEldXOm'
+    url = 'https://blc20.iad1.qualtrics.com/jfe/form/SV_2tVIITMjpHgSUHc'
     if u:
         return(redirect('{}?PROLIFIC_PID={}&object_type={}&version={}'.format(url,u.pid,u.object_type,u.version)))
     else:
